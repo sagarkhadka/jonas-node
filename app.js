@@ -5,6 +5,11 @@ const app = express()
 
 app.use(express.json())
 
+app.use((req, res, next) => {
+  console.log('Hello middleware')
+  next()
+})
+
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 )
@@ -20,7 +25,6 @@ const getAllTours = (req, res) => {
 }
 
 const getTour = (req, res) => {
-  console.log(req.params)
   const { id } = req.params
   const tour = tours.find((tour) => tour.id === parseInt(id))
 
